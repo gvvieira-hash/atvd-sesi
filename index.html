@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora de Gases Ideais</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin: 5px 0;
+    }
+
+    #resultado {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Calculadora - PV = nRT</h2>
+
+  <label>Pressão (P em atm):</label>
+  <input type="number" id="p" step="any">
+
+  <label>Temperatura (T em Kelvin):</label>
+  <input type="number" id="t" step="any">
+
+  <label>Número de mols (n):</label>
+  <input type="number" id="n" step="any">
+
+  <button id="btnCalcular">Calcular Volume</button>
+
+  <div id="resultado"></div>
+
+  <script>
+    function calcularVolume(n, T, P) {
+      const R = 0.082;
+
+      if (P <= 0) return "Erro: pressão deve ser maior que zero";
+      if (T <= 0) return "Erro: temperatura deve ser maior que zero (Kelvin)";
+      if (n <= 0) return "Erro: número de mols inválido";
+
+      return (n * R * T) / P;
+    }
+
+    document.getElementById("btnCalcular").addEventListener("click", function () {
+      const p = parseFloat(document.getElementById("p").value);
+      const t = parseFloat(document.getElementById("t").value);
+      const n = parseFloat(document.getElementById("n").value);
+
+      if (!p || !t || !n) {
+        document.getElementById("resultado").innerText =
+          "Preencha todos os campos corretamente!";
+        return;
+      }
+
+      const resultado = calcularVolume(n, t, p);
+
+      if (typeof resultado === "string") {
+        document.getElementById("resultado").innerText = resultado;
+      } else {
+        document.getElementById("resultado").innerText =
+          "Volume: " + resultado.toFixed(2) + " L";
+      }
+    });
+  </script>
+
+</body>
+</html>
